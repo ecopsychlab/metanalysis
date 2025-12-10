@@ -1,0 +1,25 @@
+Package: metanalysis
+Title: Tools to Organise and Perform Meta-Analysis 
+Version: 0.0.0.9000
+Authors@R: c(
+   person("Thomaz", "Bastiaanssen", email = "thomazbastiaanssen@gmail.com", 
+       role = c("aut", "cre"), comment = c(ORCID = "0000-0001-6891-734X")), 
+   person("Eugenia", "Natasha", email = "e.natasha@erasmusmc.nl", 
+       role = c("aut"), comment = c(ORCID = "0009-0002-6994-626X"))
+       )
+Description: An S7-based toolkit to define and perform analyses across several 
+    data sets.
+Imports:
+    S7,
+    rlang, 
+    arrow
+Suggests:
+    dplyr,
+    tidyr,
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
