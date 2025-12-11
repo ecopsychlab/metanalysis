@@ -103,7 +103,22 @@ x <- meta_study("demo_folder")
 x
 #> <metanalysis::meta_study>
 #>  @ folder_name: chr "demo_folder"
-#>  @ study_names: chr [1:4] "A/A.parquet" "B/B.parquet" "C/C.parquet" "D/D.parquet"
+#>  @ study_names: chr [1:4] "A" "B" "C" "D"
+#>  @ study_data :'data.frame': 4 obs. of  3 variables:
+#>  .. $ folder_name: chr  "demo_folder" "demo_folder" "demo_folder" "demo_folder"
+#>  .. $ study_name : chr  "A" "B" "C" "D"
+#>  .. $ study_data : chr  "A.parquet" "B.parquet" "C.parquet" "D.parquet"
+```
+
+Maybe some information could be collected like this:
+
+``` r
+x@study_data
+#>   folder_name study_name study_data
+#> 1 demo_folder          A  A.parquet
+#> 2 demo_folder          B  B.parquet
+#> 3 demo_folder          C  C.parquet
+#> 4 demo_folder          D  D.parquet
 ```
 
 ``` r

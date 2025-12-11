@@ -55,10 +55,17 @@ list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 meta_study object could be the main user-oriented interface, for instance to get
 summary statistics across data sets. 
 
-```{r meta-study}
+```{r meta-studya}
 
 x <- meta_study("demo_folder")
 x
+
+```
+
+Maybe some information could be collected like this: 
+
+```{r meta-studyb}
+x@study_data
 
 ```
 
