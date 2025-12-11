@@ -24,9 +24,8 @@ meta_study <- S7::new_class(
         )
     ),
     constructor = function(x) {
-        if( !file.exists(x) ) {
-            stop(paste0("object '", x , "' not found. "))
-            }
+        if( inherits( x, "metanalysis::meta_study" ) ) { return(x) }
+        if( !file.exists(x) ) { stop(paste0("object '", x , "' not found. ")) }
         S7::new_object(
             .parent = S7::S7_object(),
             folder_name = x

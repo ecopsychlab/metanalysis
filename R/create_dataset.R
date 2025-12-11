@@ -1,3 +1,7 @@
+meta_add <- function(x, type) {
+    NULL
+}
+
 #' @title Create a data set from a list of objects.
 #' @description
 #' Meant to be seamlessly compatible with `arrow::read_parquet()`.
@@ -7,7 +11,7 @@
 #' @param engine `function` The function that will write out the content of `x`.
 #'     (Default: `arrow::write_parquet`)
 #' @param ... Additional arguments to function specified with 'engine' argument.
-#' @param .file_suffix,file_ext `Character scalar`. Specify file suffix and
+#' @param .file_suffix,.file_ext `Character scalar`. Specify file suffix and
 #'     file extension, respectively. (Default: `NULL`)
 #' @export
 #' @importFrom arrow write_parquet

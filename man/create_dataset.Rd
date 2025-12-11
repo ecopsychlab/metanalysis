@@ -24,7 +24,7 @@ should be created.}
 
 \item{...}{Additional arguments to function specified with 'engine' argument.}
 
-\item{.file_suffix, file_ext}{\verb{Character scalar}. Specify file suffix and
+\item{.file_suffix, .file_ext}{\verb{Character scalar}. Specify file suffix and
 file extension, respectively. (Default: \code{NULL})}
 }
 \description{
