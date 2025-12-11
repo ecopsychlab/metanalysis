@@ -90,8 +90,20 @@ create_dataset(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
-#> [1] "demo_folder/A.parquet" "demo_folder/B.parquet" "demo_folder/C.parquet"
-#> [4] "demo_folder/D.parquet"
+#> [1] "demo_folder/A/A.parquet" "demo_folder/B/B.parquet"
+#> [3] "demo_folder/C/C.parquet" "demo_folder/D/D.parquet"
+```
+
+meta_study object could be the main user-oriented interface, for
+instance to get summary statistics across data sets.
+
+``` r
+
+x <- meta_study("demo_folder")
+x
+#> <metanalysis::meta_study>
+#>  @ folder_name: chr "demo_folder"
+#>  @ study_names: chr [1:4] "A/A.parquet" "B/B.parquet" "C/C.parquet" "D/D.parquet"
 ```
 
 ``` r
@@ -103,7 +115,10 @@ library(arrow)
 #> The following object is masked from 'package:utils':
 #> 
 #>     timestamp
-arrow::open_dataset("demo_folder")
+
+# we can wrap arrow::open_dataset by calling it like this: 
+
+arrow::open_dataset(x@folder_name)
 #> FileSystemDataset with 4 Parquet files
 #> 11 columns
 #> mpg: double

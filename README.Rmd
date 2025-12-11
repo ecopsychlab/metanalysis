@@ -52,10 +52,24 @@ create_dataset(x, "demo_folder")
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 ```
 
+meta_study object could be the main user-oriented interface, for instance to get
+summary statistics across data sets. 
+
+```{r meta-study}
+
+x <- meta_study("demo_folder")
+x
+
+```
+
 ```{r examplec}
 # We can treat our folder as a data base and open it using the arrow library: 
 library(arrow)
-arrow::open_dataset("demo_folder")
+
+# we can wrap arrow::open_dataset by calling it like this: 
+
+arrow::open_dataset(x@folder_name)
+
 
 ```
 

@@ -1,6 +1,9 @@
 # demo folders
 demo_*/
 
+# Parquet files
+.parquet
+
 # History files
 .Rhistory
 .Rapp.history
