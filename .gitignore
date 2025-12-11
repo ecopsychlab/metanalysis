@@ -1,3 +1,6 @@
+# demo folders
+demo_*/
+
 # History files
 .Rhistory
 .Rapp.history
