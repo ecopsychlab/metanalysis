@@ -9,7 +9,7 @@
 #' x
 #'
 random_meta_study <- function(
-        n, dataset_name = "random_meta_study",
+        n, dataset_name = tempdir(),
         .file_suffix = NULL, .file_ext = "parquet"
         ) {
 

@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 # metanalysis
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of metanalysis is to provide a convenient interface to manage and 

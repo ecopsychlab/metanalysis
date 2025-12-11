@@ -1,8 +1,10 @@
-#' @importFrom S7 new_class new_S3_class new_object
+#' @title An S7 object to organised a meta-analysis
+#' @importFrom S7 new_class class_character new_property new_object S7_object
+#' @param x `Character scalar` pointing to the relevant folder.
 #' @export
-#' @usage
+#' @examples
 #'
-#' meta_study("demo_folder")
+#' meta_study
 #'
 meta_study <- S7::new_class(
     name = "meta_study",

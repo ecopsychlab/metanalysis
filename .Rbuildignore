@@ -4,3 +4,4 @@
 ^README\.Rmd$
 ^demo_folder$
 ^\.parquet$
+^\.github$

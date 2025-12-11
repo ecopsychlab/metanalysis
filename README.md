@@ -5,6 +5,7 @@
 
 <!-- badges: start -->
 
+[![R-CMD-check](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of metanalysis is to provide a convenient interface to manage
@@ -78,15 +79,6 @@ x
 # Let's first prepare a nested folder structure to keep our tables: 
 
 create_dataset(x, "demo_folder")
-#> Warning in dir.create(dataset_name): 'demo_folder' already exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/A' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/B' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/C' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/D' already
-#> exists
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)

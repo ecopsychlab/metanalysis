@@ -6,7 +6,7 @@
 \usage{
 random_meta_study(
   n,
-  dataset_name = "random_meta_study",
+  dataset_name = tempdir(),
   .file_suffix = NULL,
   .file_ext = "parquet"
 )
