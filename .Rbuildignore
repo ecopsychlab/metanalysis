@@ -5,3 +5,6 @@
 ^demo_folder$
 ^\.parquet$
 ^\.github$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$

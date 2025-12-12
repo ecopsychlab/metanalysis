@@ -10,7 +10,7 @@ issues](https://img.shields.io/github/issues/ecopsychlab/metanalysis)](https://g
 [![GitHub
 pulls](https://img.shields.io/github/issues-pr/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/pulls)
 [![R
-BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml)
+BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml)
 <!-- badges: end --> The goal of metanalysis is to provide a convenient
 interface to manage and analyse multiple data sets.
 
