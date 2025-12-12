@@ -16,9 +16,10 @@ knitr::opts_chunk$set(
 # metanalysis
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/R-CMD-check.yaml)
+[![GitHub issues](https://img.shields.io/github/issues/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/issues)
+[![GitHub pulls](https://img.shields.io/github/issues-pr/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/pulls)
+[![R BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml)
 <!-- badges: end -->
-
 The goal of metanalysis is to provide a convenient interface to manage and 
 analyse multiple data sets. 
 
