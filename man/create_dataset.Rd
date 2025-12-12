@@ -8,7 +8,7 @@ create_dataset(
   x,
   dataset_name,
   engine = arrow::write_parquet,
-  ...,
+  engine_args = NULL,
   .file_suffix = NULL,
   .file_ext = NULL
 )
@@ -22,7 +22,8 @@ should be created.}
 \item{engine}{\code{function} The function that will write out the content of \code{x}.
 (Default: \code{arrow::write_parquet})}
 
-\item{...}{Additional arguments to function specified with 'engine' argument.}
+\item{engine_args}{\code{list} of other arguments to \code{engine} function argument.
+(Default: NULL)}
 
 \item{.file_suffix, .file_ext}{\verb{Character scalar}. Specify file suffix and
 file extension, respectively. (Default: \code{NULL})}
