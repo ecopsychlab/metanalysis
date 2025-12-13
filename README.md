@@ -80,7 +80,6 @@ x
 
 ``` r
 # Let's first prepare a nested folder structure to keep our tables: 
-
 create_dataset(x, "demo_folder")
 
 # Confirm that the files are now written: 
@@ -97,9 +96,11 @@ instance to get summary statistics across data sets.
 x <- meta_study("demo_folder")
 x
 #> <metanalysis::meta_study>
-#>  @ folder_name: chr "demo_folder"
-#>  @ study_names: chr [1:4] "A" "B" "C" "D"
-#>  @ study_data :'data.frame': 4 obs. of  3 variables:
+#>  @ abs_path       : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
+#>  @ folder_name    : chr "demo_folder"
+#>  @ folder_location: chr "/home/thomaz/Documents/bioinf/metanalysis"
+#>  @ study_names    : chr [1:4] "A" "B" "C" "D"
+#>  @ study_data     :'data.frame': 4 obs. of  3 variables:
 #>  .. $ folder_name: chr  "demo_folder" "demo_folder" "demo_folder" "demo_folder"
 #>  .. $ study_name : chr  "A" "B" "C" "D"
 #>  .. $ study_data : chr  "A.parquet" "B.parquet" "C.parquet" "D.parquet"
@@ -108,12 +109,8 @@ x
 Maybe some information could be collected like this:
 
 ``` r
-x@study_data
-#>   folder_name study_name study_data
-#> 1 demo_folder          A  A.parquet
-#> 2 demo_folder          B  B.parquet
-#> 3 demo_folder          C  C.parquet
-#> 4 demo_folder          D  D.parquet
+x@folder_name
+#> [1] "demo_folder"
 ```
 
 ``` r
@@ -128,7 +125,8 @@ library(arrow)
 
 # we can wrap arrow::open_dataset by calling it like this: 
 
-arrow::open_dataset(x@folder_name)
+y <- arrow::open_dataset(x@folder_name)
+y
 #> FileSystemDataset with 4 Parquet files
 #> 11 columns
 #> mpg: double
@@ -148,13 +146,27 @@ arrow::open_dataset(x@folder_name)
 # I should ensure this doesn't mess with arrow performance. 
 ```
 
-From there: - harmonize metadata - see `schema` documentation of arrow
+Ongoing:
 
-- define analyses - see `arrow::register_scalar_function()` - looks
-  really nice, but almost certainly would require some nice wrapping for
-  our target audience.
+- Take your datasets in whatever format they are and organise them into
+  an arrow compatible dataset folder structure.
 
-- alternate input methods
+  - XSummarizedExperiments could be decomposed to assay, row and col
+    .parquets.
+    - Need function to read them back from parquet component parts
+  - Should have functions to transform common bio formats to parquet.
+    Maybe funnel through mia io? Need to look into this to decide.
 
-- do we want to automatically create a reproducible repository for the
-  analysis?
+- harmonize metadata - see `schema` documentation of arrow
+
+- Produce some sort of overarching metadata file in the study folder.
+
+Later: - define analyses - see `arrow::register_scalar_function()` -
+looks really nice, but almost certainly would require some nice wrapping
+for our target audience.
+
+- Some way to conveniently collect and compare across
+  studies/interactions. meta-meta-data??
+
+- A function to make the totality of the analysis into a github repo,
+  likely using R/Qmd
