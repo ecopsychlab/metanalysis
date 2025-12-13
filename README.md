@@ -82,15 +82,6 @@ x
 # Let's first prepare a nested folder structure to keep our tables: 
 
 create_dataset(x, "demo_folder")
-#> Warning in dir.create(dataset_name): 'demo_folder' already exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/A' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/B' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/C' already
-#> exists
-#> Warning in dir.create(file.path(dataset_name, n)): 'demo_folder/D' already
-#> exists
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
@@ -153,6 +144,8 @@ arrow::open_dataset(x@folder_name)
 #> carb: double
 #> 
 #> See $metadata for additional Schema metadata
+
+# I should ensure this doesn't mess with arrow performance. 
 ```
 
 From there: - harmonize metadata - see `schema` documentation of arrow

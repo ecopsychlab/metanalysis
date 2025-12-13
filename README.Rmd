@@ -79,6 +79,7 @@ library(arrow)
 
 arrow::open_dataset(x@folder_name)
 
+# I should ensure this doesn't mess with arrow performance. 
 
 ```
 

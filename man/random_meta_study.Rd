@@ -4,21 +4,13 @@
 \alias{random_meta_study}
 \title{Randomly generate a meta_study and corresponding folders.}
 \usage{
-random_meta_study(
-  n,
-  dataset_name = tempdir(),
-  .file_suffix = NULL,
-  .file_ext = "parquet"
-)
+random_meta_study(n, dataset_name = tempdir())
 }
 \arguments{
 \item{n}{\verb{Numeric scalar} number of studies to generate}
 
 \item{dataset_name}{\verb{Character scalar}. Name of the database folder that
 should be created.}
-
-\item{.file_suffix, .file_ext}{\verb{Character scalar}. Specify file suffix and
-file extension, respectively. (Default: \code{NULL})}
 }
 \description{
 Mostly for instructive and debugging purposes.

@@ -1,65 +1,93 @@
-meta_add <- function(x, type) {
-    NULL
-}
-
 #' @title Create a data set from a list of objects.
 #' @description
 #' Meant to be seamlessly compatible with `arrow::read_parquet()`.
-#' @param x `Named list` of objects to create an arrow-compatible dataset from
-#' @param dataset_name `Character scalar`. Name of the database folder that
-#'     should be created.
-#' @param engine `function` The function that will write out the content of `x`.
-#'     (Default: `arrow::write_parquet`)
-#' @param engine_args `list` of other arguments to `engine` function argument.
-#'     (Default: NULL)
-#' @param .file_suffix,.file_ext `Character scalar`. Specify file suffix and
-#'     file extension, respectively. (Default: `NULL`)
+#' @param x `Named list` of objects to create an arrow-compatible data set from.
+#'     May also be a `character vector`, in which case only empty folders are
+#'     created.
+#' @inheritParams add_dataset
 #' @export
 #' @importFrom arrow write_parquet
+#' @importFrom rlang call_args call_match
 #'
 create_dataset <- function(
-        x, dataset_name, engine = arrow::write_parquet, engine_args = NULL,
-        .file_suffix = NULL, .file_ext = NULL
+        x, dataset_name, data_type = NULL, engine = arrow::write_parquet,
+        engine_args = NULL, file_ext = NULL
         ) {
     # check input
     stopifnot(
         "'x' must be a character vector or a named list." =
             inherits(x, c("list", "character"))
         )
+
     # Simple case first
     if( is.character(x) ) {
         .build_dataset_folders(x, dataset_name)
-        return(invisible())
-        }
+        # Finish simple case
+        return( invisible() )
+    }
+
     if( is.null(x_names <- names(x)) ) {
         stop("'x' must be a character vector or a named list.")
     }
     .build_dataset_folders(x_names, dataset_name)
 
+    # Then, prepare a call to `add_dataset()`
+    add_args <- rlang::call_args(
+        rlang::call_match( fn = add_dataset, defaults = TRUE )
+        )
+    add_args[["dataset_name"]] <- dataset_name
+    do.call(add_dataset, add_args)
+
+    # Finish
+    return( invisible(NULL) )
+}
+
+
+#' @title Add a list of R objects to an existing meta_study object.
+#' @param x `Named list` of objects to create an arrow-compatible data set from.
+#' @param dataset_name `Character scalar`. Name of the database folder that
+#'     should be created.
+#' @param engine `function` The function that will write out the content of `x`.
+#'     (Default: `arrow::write_parquet`)
+#' @param engine_args `list` of other arguments to `engine` function argument.
+#'     (Default: NULL)
+#' @param data_type,file_ext `Character scalar`. Specify file suffix and
+#'     file extension, respectively. (Default: `NULL`)
+#' @importFrom rlang enquo
+#' @export
+#'
+add_dataset <- function(
+        x, dataset_name, data_type = NULL, engine = arrow::write_parquet,
+        engine_args = NULL, file_ext = NULL
+        ) {
+
     # Guess file extension from writing engine
-    if(is.null(.file_ext)) {
-        .file_ext <- .engine2extension(substitute(engine))
+    if(is.null(file_ext)) {
+        file_ext <- .engine2extension(substitute(engine))
     }
+    x_names <- names(x)
 
     out_paths <- paste0(
-        file.path(dataset_name, x_names, paste0(x_names, .file_suffix)),
-        .file_ext
-        )
+        file.path(dataset_name, x_names, paste0(x_names, data_type)),
+        file_ext
+    )
 
     .add_dataset_files(x, out_paths, engine, engine_args)
 
-    invisible(NULL)
+    invisible()
 }
+
 
 #' @param x a character `vector names(x)``
 #' @param dataset_name from `create_dataset()` call
 #' @noRd
 #'
 .build_dataset_folders <- function(x, dataset_name) {
-    dir.create(dataset_name)
+    dir.create(dataset_name, showWarnings = FALSE)
 
-    for( n in x ) {dir.create( file.path(dataset_name, n) )}
-
+    for( n in x ) {
+        dir.create( file.path(dataset_name, n), showWarnings = FALSE )
+        }
     invisible(NULL)
 }
 
@@ -71,7 +99,6 @@ create_dataset <- function(
 .add_dataset_files <- function(x, out_paths, engine, engine_args) .mapply(
     engine, dots = list(x, out_paths), MoreArgs = engine_args
     )
-
 
 .engine2extension <- function(x) {
     # Compare engine to string of extensions
@@ -89,6 +116,4 @@ create_dataset <- function(
     ext <- paste0(".", names(which(ext)))
     return(ext)
 }
-
-
 
