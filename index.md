@@ -135,6 +135,8 @@ arrow::open_dataset(x@folder_name)
 #> carb: double
 #> 
 #> See $metadata for additional Schema metadata
+
+# I should ensure this doesn't mess with arrow performance. 
 ```
 
 From there: - harmonize metadata - see `schema` documentation of arrow

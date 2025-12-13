@@ -135,6 +135,8 @@ arrow::open_dataset(x@folder_name)
 #> carb: double
 #> 
 #> See $metadata for additional Schema metadata
+
+# I should ensure this doesn't mess with arrow performance. 
 ```
 
 From there: - harmonize metadata - see `schema` documentation of arrow
@@ -153,6 +155,8 @@ From there: - harmonize metadata - see `schema` documentation of arrow
 
 ## All functions
 
+- [`add_dataset()`](https://ecopsychlab.github.io/metanalysis/reference/add_dataset.md)
+  : Add a list of R objects to an existing meta_study object.
 - [`create_dataset()`](https://ecopsychlab.github.io/metanalysis/reference/create_dataset.md)
   : Create a data set from a list of objects.
 - [`meta_study()`](https://ecopsychlab.github.io/metanalysis/reference/meta_study.md)

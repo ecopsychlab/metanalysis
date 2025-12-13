@@ -1,12 +1,11 @@
-# Create a data set from a list of objects.
+# Add a list of R objects to an existing meta_study object.
 
-Meant to be seamlessly compatible with
-[`arrow::read_parquet()`](https://arrow.apache.org/docs/r/reference/read_parquet.html).
+Add a list of R objects to an existing meta_study object.
 
 ## Usage
 
 ``` r
-create_dataset(
+add_dataset(
   x,
   dataset_name,
   data_type = NULL,
@@ -21,8 +20,6 @@ create_dataset(
 - x:
 
   `Named list` of objects to create an arrow-compatible data set from.
-  May also be a `character vector`, in which case only empty folders are
-  created.
 
 - dataset_name:
 

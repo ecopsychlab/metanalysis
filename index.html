@@ -164,7 +164,9 @@
 <span><span class="co">#&gt; gear: double</span></span>
 <span><span class="co">#&gt; carb: double</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; See $metadata for additional Schema metadata</span></span></code></pre></div>
+<span><span class="co">#&gt; See $metadata for additional Schema metadata</span></span>
+<span></span>
+<span><span class="co"># I should ensure this doesn't mess with arrow performance. </span></span></code></pre></div>
 <p>From there: - harmonize metadata - see <code>schema</code> documentation of arrow</p>
 <ul>
 <li><p>define analyses - see <code><a href="https://arrow.apache.org/docs/r/reference/register_scalar_function.html" class="external-link">arrow::register_scalar_function()</a></code> - looks really nice, but almost certainly would require some nice wrapping for our target audience.</p></li>

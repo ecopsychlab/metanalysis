@@ -5,12 +5,7 @@ Mostly for instructive and debugging purposes.
 ## Usage
 
 ``` r
-random_meta_study(
-  n,
-  dataset_name = tempdir(),
-  .file_suffix = NULL,
-  .file_ext = "parquet"
-)
+random_meta_study(n, dataset_name = tempdir())
 ```
 
 ## Arguments
@@ -23,11 +18,6 @@ random_meta_study(
 
   `Character scalar`. Name of the database folder that should be
   created.
-
-- .file_suffix, .file_ext:
-
-  `Character scalar`. Specify file suffix and file extension,
-  respectively. (Default: `NULL`)
 
 ## Examples
 
