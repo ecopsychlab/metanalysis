@@ -11,11 +11,13 @@ Description: An S7-based toolkit to define and perform analyses across several
     data sets.
 Imports:
     S7,
+    rlang,
     arrow
 Suggests:
     dplyr,
     tidyr,
     testthat (>= 3.0.0),
+    withr,
     knitr,
     rmarkdown
 License: GPL (>= 3)
