@@ -23,7 +23,8 @@ meta_study <- S7::new_class(
         study_data = S7::new_property(
             getter = function(self) data.frame(
                 folder_name = self@folder_name,
-                study_name  = self@study_names            )
+                study_name = self@study_names
+                )
         )
     ),
     constructor = function(x) {

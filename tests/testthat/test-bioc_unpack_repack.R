@@ -1,13 +1,13 @@
-test_that("Packing does not affect SE content", {
-
+test_that("Re-assembly does not affect SE content", {
+    library(airway)
     data("airway", package="airway")
 
     path <- tempdir()
     x <- airway
 
-    unpack_SE(x, path)
+    disassemble_SE(x, path)
 
-    y <- repack_SE(path)
+    y <- assemble_SE(path)
 
     expect_identical(
         colData(x), colData(y)
