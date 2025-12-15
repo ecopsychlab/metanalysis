@@ -47,7 +47,6 @@ x
 
 ```{r exampleb}
 # Let's first prepare a nested folder structure to keep our tables: 
-
 create_dataset(x, "demo_folder")
 
 # Confirm that the files are now written: 
@@ -67,7 +66,7 @@ x
 Maybe some information could be collected like this: 
 
 ```{r meta-studyb}
-x@study_data
+x@folder_name
 
 ```
 
@@ -77,19 +76,33 @@ library(arrow)
 
 # we can wrap arrow::open_dataset by calling it like this: 
 
-arrow::open_dataset(x@folder_name)
+y <- arrow::open_dataset(x@folder_name)
+y
 
 # I should ensure this doesn't mess with arrow performance. 
 
 ```
 
-From there: 
+Ongoing: 
+
+- Take your datasets in whatever format they are and organise them into an arrow
+  compatible dataset folder structure. 
+  - XSummarizedExperiments could be decomposed to assay, row and col .parquets. 
+    - Need function to read them back from parquet component parts
+  - Should have functions to transform common bio formats to parquet. Maybe 
+    funnel through mia io? Need to look into this to decide.
+
 - harmonize metadata - see `schema` documentation of arrow
 
+- Produce some sort of overarching metadata file in the study folder. 
+
+Later: 
 - define analyses - see `arrow::register_scalar_function()` - looks really nice,
   but almost certainly would require some nice wrapping for our target audience.
+  
+- Some way to conveniently collect and compare across studies/interactions. 
+  meta-meta-data??
 
-- alternate input methods
-
-- do we want to automatically create a reproducible repository for the analysis?
+- A function to make the totality of the analysis into a github repo, likely 
+using R/Qmd
 

@@ -1,3 +1,11 @@
+# TODO Alt writing code
+# arrow::write_dataset(
+#   x %>% dplyr::bind_rows(.id = "study"), "demo_folder", hive_style = FALSE,
+#   partitioning = "study"
+#   )
+
+
+
 #' @title Create a data set from a list of objects.
 #' @description
 #' Meant to be seamlessly compatible with `arrow::read_parquet()`.

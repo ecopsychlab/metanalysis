@@ -9,7 +9,7 @@
 #' x
 #'
 random_meta_study <- function(
-        n, dataset_name = tempdir()) {
+        n, dataset_name = tempfile()) {
 
     s <- paste0( "study_", formatC(seq_len(n), width = nchar(n), flag = "0") )
     dir.create(dataset_name, showWarnings = FALSE)

@@ -1,5 +1,6 @@
 # demo folders
 demo_*/
+flatSE*/
 
 # Parquet files
 .parquet

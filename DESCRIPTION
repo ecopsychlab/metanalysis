@@ -12,10 +12,13 @@ Description: An S7-based toolkit to define and perform analyses across several
 Imports:
     S7,
     rlang,
+    dplyr,
+    tibble,
+    SummarizedExperiment,
     arrow
 Suggests:
-    dplyr,
     tidyr,
+    airway,
     testthat (>= 3.0.0),
     withr,
     knitr,
