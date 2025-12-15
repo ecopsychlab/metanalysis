@@ -59,7 +59,7 @@ assemble_SE <- function(x) {
     SummarizedExperiment::SummarizedExperiment(
         assays = assay_input,
         colData = coldata_input,
-        rowData = rowdata_input,
+        rowData = rowdata_input
             )
 }
 
