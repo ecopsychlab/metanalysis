@@ -24,7 +24,7 @@ disassemble_SE <- function(x, path = "flatSE") {
 
 #' @title Assemble a SummarizedExperiment from structured component files.
 #' @param x `Character scalar` path to the file.
-#' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @importFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom dplyr collect select any_of
 #' @importFrom arrow open_dataset
 #' @export

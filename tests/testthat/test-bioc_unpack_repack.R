@@ -1,5 +1,5 @@
 test_that("Re-assembly does not affect SE content", {
-    library(airway)
+    require("airway")
     data("airway", package="airway")
 
     path <- tempdir()
