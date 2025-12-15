@@ -1,7 +1,10 @@
+#' @title Disassemble a SummarizedExperiment into component tables and save them
+#' @param x `SummarizedExperiment`
+#' @param path `Character scalar` path to write to.
 #' @export
 #' @importFrom SummarizedExperiment assays colData rowData
 #'
-unpack_SE <- function(x, path = "flatSE") {
+disassemble_SE <- function(x, path = "flatSE") {
     se_path <- file.path(path)
     .prep_SE_dir(se_path)
 
@@ -19,13 +22,14 @@ unpack_SE <- function(x, path = "flatSE") {
 
 }
 
-
-#' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @title Assemble a SummarizedExperiment from structured component files.
+#' @param x `Character scalar` path to the file.
+#' @importFrom SummarizedExperiment SummarizedExperiment
 #' @importFrom dplyr collect select any_of
 #' @importFrom arrow open_dataset
 #' @export
 #'
-repack_SE <- function(x) {
+assemble_SE <- function(x) {
     if(!file.exists(x)) stop("File 'x' does not exist. Is path correct?")
     p <- c("group", "group_name")
 
@@ -55,7 +59,7 @@ repack_SE <- function(x) {
     SummarizedExperiment::SummarizedExperiment(
         assays = assay_input,
         colData = coldata_input,
-        rowData = rowdata_input,
+        rowData = rowdata_input
             )
 }
 
