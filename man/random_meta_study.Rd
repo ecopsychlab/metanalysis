@@ -4,7 +4,7 @@
 \alias{random_meta_study}
 \title{Randomly generate a meta_study and corresponding folders.}
 \usage{
-random_meta_study(n, dataset_name = tempdir())
+random_meta_study(n, dataset_name = tempfile())
 }
 \arguments{
 \item{n}{\verb{Numeric scalar} number of studies to generate}

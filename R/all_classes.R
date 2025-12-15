@@ -18,17 +18,12 @@ meta_study <- S7::new_class(
             getter = function(self) dirname(self@abs_path)
         ),
         study_names = S7::new_property(
-            getter = function(self) list.files( self@folder_name )
+            getter = function(self) list.files( self@abs_path )
         ),
         study_data = S7::new_property(
             getter = function(self) data.frame(
                 folder_name = self@folder_name,
-                study_name  = self@study_names,
-                study_data  = list.files(
-                    file.path(self@folder_name, self@study_names),
-                    full.names = FALSE
-                    )
-            )
+                study_name  = self@study_names            )
         )
     ),
     constructor = function(x) {

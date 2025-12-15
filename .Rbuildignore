@@ -3,6 +3,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^demo_folder$
+^flatSE$
 ^\.parquet$
 ^\.github$
 ^_pkgdown\.yml$
