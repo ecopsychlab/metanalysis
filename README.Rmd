@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![GitHub issues](https://img.shields.io/github/issues/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/issues)
 [![GitHub pulls](https://img.shields.io/github/issues-pr/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/pulls)
-[![R BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml)
+[![R BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml)
 <!-- badges: end -->
 The goal of metanalysis is to provide a convenient interface to manage and 
 analyse multiple data sets. 
@@ -47,7 +47,7 @@ x
 
 ```{r exampleb}
 # Let's first prepare a nested folder structure to keep our tables: 
-create_dataset(x, "demo_folder")
+create_study_forest(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
@@ -58,7 +58,7 @@ summary statistics across data sets.
 
 ```{r meta-studya}
 
-x <- meta_study("demo_folder")
+x <- new_meta_study("demo_folder")
 x
 
 ```
@@ -66,7 +66,7 @@ x
 Maybe some information could be collected like this: 
 
 ```{r meta-studyb}
-x@folder_name
+x@slotNames
 
 ```
 
@@ -76,7 +76,7 @@ library(arrow)
 
 # we can wrap arrow::open_dataset by calling it like this: 
 
-y <- arrow::open_dataset(x@folder_name)
+y <- arrow::open_dataset(x@path)
 y
 
 # I should ensure this doesn't mess with arrow performance. 

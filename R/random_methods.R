@@ -3,25 +3,25 @@
 #' Mostly for instructive and debugging purposes.
 #' @export
 #' @param n `Numeric scalar` number of studies to generate
-#' @inheritParams create_dataset
+#' @inheritParams create_study_forest
 #' @examples
 #' x <- random_meta_study(n = 100)
 #' x
 #'
-random_meta_study <- function(
-        n, dataset_name = tempfile()) {
+random_meta_study <- function(n, dataset_name = tempfile()) {
+
 
     s <- paste0( "study_", formatC(seq_len(n), width = nchar(n), flag = "0") )
     dir.create(dataset_name, showWarnings = FALSE)
     invisible(
         lapply(file.path(dataset_name, s), dir.create, showWarnings = FALSE)
-        )
+    )
     for(i in s) {
         arrow::write_parquet(
             .random_table(), paste0(file.path(dataset_name, i, i), ".parquet")
-            )
+        )
     }
-    meta_study(dataset_name)
+    new_meta_study(dataset_name)
 }
 
 #' Helper to make random tables

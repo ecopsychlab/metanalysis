@@ -12,10 +12,12 @@ Description: An S7-based toolkit to define and perform analyses across several
 Imports:
     S7,
     rlang,
+    arrow,
     dplyr,
+    plyxp,
     tibble,
     SummarizedExperiment,
-    arrow
+    BiocGenerics
 Suggests:
     tidyr,
     airway,

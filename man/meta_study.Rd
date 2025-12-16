@@ -2,18 +2,16 @@
 % Please edit documentation in R/all_classes.R
 \name{meta_study}
 \alias{meta_study}
+\alias{new_meta_study}
 \title{An S7 object to organise a meta-analysis}
 \usage{
-meta_study(x)
+meta_study(path = character(0))
+
+new_meta_study(x)
 }
 \arguments{
 \item{x}{\verb{Character scalar} pointing to the relevant folder.}
 }
 \description{
 An S7 object to organise a meta-analysis
-}
-\examples{
-
-meta_study
-
 }
