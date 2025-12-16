@@ -2,7 +2,7 @@ test_that("Re-assembly does not affect SE content", {
     require("airway")
     data("airway", package="airway")
 
-    path <- tempdir()
+    path <- tempfile()
     x <- airway
 
     disassemble_SE(x, path)

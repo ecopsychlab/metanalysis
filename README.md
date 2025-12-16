@@ -10,7 +10,7 @@ issues](https://img.shields.io/github/issues/ecopsychlab/metanalysis)](https://g
 [![GitHub
 pulls](https://img.shields.io/github/issues-pr/ecopsychlab/metanalysis)](https://github.com/ecopsychlab/metanalysis/pulls)
 [![R
-BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml)
+BiocCheck](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml/badge.svg)](https://github.com/ecopsychlab/metanalysis/actions/workflows/test.yaml)
 <!-- badges: end --> The goal of metanalysis is to provide a convenient
 interface to manage and analyse multiple data sets.
 
@@ -80,12 +80,14 @@ x
 
 ``` r
 # Let's first prepare a nested folder structure to keep our tables: 
-create_dataset(x, "demo_folder")
+create_study_forest(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
-#> [1] "demo_folder/A/A.parquet" "demo_folder/B/B.parquet"
-#> [3] "demo_folder/C/C.parquet" "demo_folder/D/D.parquet"
+#> [1] "demo_folder/data_sets/A/Aauto.parquet"
+#> [2] "demo_folder/data_sets/B/Bauto.parquet"
+#> [3] "demo_folder/data_sets/C/Cauto.parquet"
+#> [4] "demo_folder/data_sets/D/Dauto.parquet"
 ```
 
 meta_study object could be the main user-oriented interface, for
@@ -93,24 +95,20 @@ instance to get summary statistics across data sets.
 
 ``` r
 
-x <- meta_study("demo_folder")
+x <- new_meta_study("demo_folder")
 x
-#> <metanalysis::meta_study>
-#>  @ abs_path       : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
-#>  @ folder_name    : chr "demo_folder"
-#>  @ folder_location: chr "/home/thomaz/Documents/bioinf/metanalysis"
-#>  @ study_names    : chr [1:4] "A" "B" "C" "D"
-#>  @ study_data     :'data.frame': 4 obs. of  3 variables:
-#>  .. $ folder_name: chr  "demo_folder" "demo_folder" "demo_folder" "demo_folder"
-#>  .. $ study_name : chr  "A" "B" "C" "D"
-#>  .. $ study_data : chr  "A.parquet" "B.parquet" "C.parquet" "D.parquet"
+#> <metanalysis::study_instance>
+#>  @ path     : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
+#>  @ slotNames: chr [1:2] "data_sets" "processed"
+#>  @ data_sets: NULL
+#>  @ processed: NULL
 ```
 
 Maybe some information could be collected like this:
 
 ``` r
-x@folder_name
-#> [1] "demo_folder"
+x@slotNames
+#> [1] "data_sets" "processed"
 ```
 
 ``` r
@@ -125,7 +123,7 @@ library(arrow)
 
 # we can wrap arrow::open_dataset by calling it like this: 
 
-y <- arrow::open_dataset(x@folder_name)
+y <- arrow::open_dataset(x@path)
 y
 #> FileSystemDataset with 4 Parquet files
 #> 11 columns

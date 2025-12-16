@@ -1,31 +1,24 @@
-# TODO Alt writing code
-# arrow::write_dataset(
-#   x %>% dplyr::bind_rows(.id = "study"), "demo_folder", hive_style = FALSE,
-#   partitioning = "study"
-#   )
-
-
-
-#' @title Create a data set from a list of objects.
-#' @description
-#' Meant to be seamlessly compatible with `arrow::read_parquet()`.
+#' @title Create a study forest.
 #' @param x `Named list` of objects to create an arrow-compatible data set from.
-#'     May also be a `character vector`, in which case only empty folders are
-#'     created.
-#' @inheritParams add_dataset
+#' @param dataset_name `Character scalar`. Name of the database folder that
+#'     should be created.
+#' @param engine `function` The function that will write out the content of `x`.
+#'     (Default: `arrow::write_parquet`)
+#' @param engine_args `list` of other arguments to `engine` function argument.
+#'     (Default: NULL)
+#' @param data_type,file_ext `Character scalar`. Specify file suffix and
+#'     file extension, respectively. (Default: `NULL`)
 #' @export
-#' @importFrom arrow write_parquet
-#' @importFrom rlang call_args call_match
 #'
-create_dataset <- function(
-        x, dataset_name, data_type = NULL, engine = arrow::write_parquet,
+create_study_forest <- function(
+        x, dataset_name, data_type = "auto", engine = arrow::write_parquet,
         engine_args = NULL, file_ext = NULL
-        ) {
+) {
     # check input
     stopifnot(
         "'x' must be a character vector or a named list." =
             inherits(x, c("list", "character"))
-        )
+    )
 
     # Simple case first
     if( is.character(x) ) {
@@ -39,16 +32,18 @@ create_dataset <- function(
     }
     .build_dataset_folders(x_names, dataset_name)
 
-    # Then, prepare a call to `add_dataset()`
+    # Then, prepare a call to `add_forest_dataset()`
     add_args <- rlang::call_args(
-        rlang::call_match( fn = add_dataset, defaults = TRUE )
-        )
+        rlang::call_match( fn = add_forest_dataset, defaults = TRUE )
+    )
     add_args[["dataset_name"]] <- dataset_name
-    do.call(add_dataset, add_args)
+    do.call(add_forest_dataset, add_args)
 
     # Finish
     return( invisible(NULL) )
 }
+
+
 
 
 #' @title Add a list of R objects to an existing meta_study object.
@@ -64,8 +59,8 @@ create_dataset <- function(
 #' @importFrom rlang enquo
 #' @export
 #'
-add_dataset <- function(
-        x, dataset_name, data_type = NULL, engine = arrow::write_parquet,
+add_forest_dataset <- function(
+        x, dataset_name, data_type = "auto", engine = arrow::write_parquet,
         engine_args = NULL, file_ext = NULL
         ) {
 
@@ -76,7 +71,7 @@ add_dataset <- function(
     x_names <- names(x)
 
     out_paths <- paste0(
-        file.path(dataset_name, x_names, paste0(x_names, data_type)),
+        file.path(dataset_name, "data_sets", x_names, paste0(x_names, data_type)),
         file_ext
     )
 
@@ -87,14 +82,17 @@ add_dataset <- function(
 
 
 #' @param x a character `vector names(x)``
-#' @param dataset_name from `create_dataset()` call
+#' @param dataset_name from `create_study_forest()` call
 #' @noRd
 #'
 .build_dataset_folders <- function(x, dataset_name) {
-    dir.create(dataset_name, showWarnings = FALSE)
-
+    dir.create( dataset_name, showWarnings = FALSE )
+    lapply(
+        file.path( dataset_name, c("data_sets", "processed") ),
+        dir.create,  showWarnings = FALSE
+    )
     for( n in x ) {
-        dir.create( file.path(dataset_name, n), showWarnings = FALSE )
+        dir.create( file.path(dataset_name, "data_sets", n), showWarnings = FALSE )
         }
     invisible(NULL)
 }

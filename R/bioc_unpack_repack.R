@@ -3,21 +3,27 @@
 #' @param path `Character scalar` path to write to.
 #' @export
 #' @importFrom SummarizedExperiment assays colData rowData
+#' @importFrom BiocGenerics as.data.frame
 #'
 disassemble_SE <- function(x, path = "flatSE") {
     se_path <- file.path(path)
     .prep_SE_dir(se_path)
 
     # assays
-    .write_list_from_slot(assays(x), file.path(se_path, ".assays"))
+    .write_list_from_slot(
+        SummarizedExperiment::assays(x),
+        file.path(se_path, ".assays")
+    )
 
     # colData
     arrow::write_dataset(
-        as.data.frame(colData(x)), file.path(se_path, ".colData")
+        BiocGenerics::as.data.frame(SummarizedExperiment::colData(x)),
+        file.path(se_path, ".colData")
         )
-    # colData
+    # rowData
     arrow::write_dataset(
-        as.data.frame(rowData(x)), file.path(se_path, ".rowData")
+        BiocGenerics::as.data.frame(SummarizedExperiment::rowData(x)),
+        file.path(se_path, ".rowData")
     )
 
 }
@@ -30,6 +36,7 @@ disassemble_SE <- function(x, path = "flatSE") {
 #' @export
 #'
 assemble_SE <- function(x) {
+    if(inherits(x, "metanalysis::study_instance")) { x <- x@path }
     if(!file.exists(x)) stop("File 'x' does not exist. Is path correct?")
     p <- c("group", "group_name")
 
