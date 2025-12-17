@@ -71,7 +71,7 @@ add_forest_dataset <- function(
     x_names <- names(x)
 
     out_paths <- paste0(
-        file.path(dataset_name, "data_sets", x_names, paste0(x_names, data_type)),
+        file.path(dataset_name, "data_sets", x_names, data_type),
         file_ext
     )
 

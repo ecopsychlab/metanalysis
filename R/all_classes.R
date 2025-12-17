@@ -38,8 +38,8 @@ new_meta_study <- function(x) {
 
 
 .make_data_properties <- function(x) {
-    obj_props <- list.files(x, all.files = TRUE, no.. = TRUE)
-    lapply(obj_props, function(x) S7::new_property(name = x))
+    prp <- list.files(file.path(x, "data_sets"), all.files = TRUE, no.. = TRUE)
+    lapply(prp, function(x) S7::new_property(name = x))
     }
 
 
