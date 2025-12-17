@@ -1,9 +1,13 @@
+# TODO Add data_sets slot to class.
+# Find way to read all trees and take all objects as slots. biocM
+
+
 #' @title An S7 object to organise a meta-analysis
 #' @importFrom S7 new_class class_character new_property prop_names
 #' @export
 #'
-meta_study <- S7::new_class(
-    name = "meta_study",
+macro_study <- S7::new_class(
+    name = "macro_study",
     package = "metanalysis",
     abstract = TRUE,
     properties = list(
@@ -12,19 +16,20 @@ meta_study <- S7::new_class(
             getter = function(self) setdiff(
                 S7::prop_names(self), c("path", "slotNames")
                 )
-            )
+            ),
+        study_trees = S7::class_character
     )
 )
 
-#' @rdname meta_study
+#' @rdname macro_study
 #' @importFrom S7 new_class new_object S7_object
 #' @param x `Character scalar` pointing to the relevant folder.
 #' @export
 #'
-new_meta_study <- function(x) {
+new_macro_study <- function(x) {
     study_instance <- S7::new_class(
         name = "study_instance",
-        parent = meta_study,
+        parent = macro_study,
         package = "metanalysis",
         properties = .make_data_properties(x),
         constructor = function(x) {

@@ -46,7 +46,7 @@ create_study_forest <- function(
 
 
 
-#' @title Add a list of R objects to an existing meta_study object.
+#' @title Add a list of R objects to an existing macro_study object.
 #' @param x `Named list` of objects to create an arrow-compatible data set from.
 #' @param dataset_name `Character scalar`. Name of the database folder that
 #'     should be created.

@@ -53,12 +53,12 @@ create_study_forest(x, "demo_folder")
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 ```
 
-meta_study object could be the main user-oriented interface, for instance to get
+macro_study object could be the main user-oriented interface, for instance to get
 summary statistics across data sets. 
 
 ```{r meta-studya}
 
-x <- new_meta_study("demo_folder")
+x <- new_macro_study("demo_folder")
 x
 
 ```

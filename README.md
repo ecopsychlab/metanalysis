@@ -90,12 +90,12 @@ list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 #> [4] "demo_folder/data_sets/D/Dauto.parquet"
 ```
 
-meta_study object could be the main user-oriented interface, for
+macro_study object could be the main user-oriented interface, for
 instance to get summary statistics across data sets.
 
 ``` r
 
-x <- new_meta_study("demo_folder")
+x <- new_macro_study("demo_folder")
 x
 #> <metanalysis::study_instance>
 #>  @ path     : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"

@@ -2,7 +2,7 @@
 % Please edit documentation in R/create_dataset.R
 \name{add_forest_dataset}
 \alias{add_forest_dataset}
-\title{Add a list of R objects to an existing meta_study object.}
+\title{Add a list of R objects to an existing macro_study object.}
 \usage{
 add_forest_dataset(
   x,
@@ -29,5 +29,5 @@ file extension, respectively. (Default: \code{NULL})}
 (Default: NULL)}
 }
 \description{
-Add a list of R objects to an existing meta_study object.
+Add a list of R objects to an existing macro_study object.
 }
