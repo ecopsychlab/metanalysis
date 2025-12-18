@@ -71,10 +71,10 @@ add_forest_dataset <- function(
     x_names <- names(x)
 
     out_paths <- paste0(
-        file.path(dataset_name, "data_sets", x_names, data_type),
+        file.path(dataset_name, "data_sets", x_names, data_type, data_type),
         file_ext
     )
-
+    .add_dataset_folders(dataset_name, data_type)
     .add_dataset_files(x, out_paths, engine, engine_args)
 
     invisible()
@@ -96,6 +96,18 @@ add_forest_dataset <- function(
         }
     invisible(NULL)
 }
+
+.add_dataset_folders <- function(dataset_name, data_type) {
+    lapply(
+        file.path(
+            list.dirs(file.path(dataset_name, "data_sets"), recursive = FALSE),
+            data_type
+        ),
+        dir.create,  showWarnings = FALSE
+    )
+    invisible(NULL)
+}
+
 
 #' @param x a list of files to write
 #' @param out_paths character vector of out paths

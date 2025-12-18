@@ -2,12 +2,9 @@
 % Please edit documentation in R/all_classes.R
 \name{macro_study}
 \alias{macro_study}
-\alias{new_macro_study}
 \title{An S7 object to organise a meta-analysis}
 \usage{
-macro_study(path = character(0))
-
-new_macro_study(x)
+macro_study(x)
 }
 \arguments{
 \item{x}{\verb{Character scalar} pointing to the relevant folder.}

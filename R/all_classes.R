@@ -3,49 +3,76 @@
 
 
 #' @title An S7 object to organise a meta-analysis
-#' @importFrom S7 new_class class_character new_property prop_names
+#' @importFrom S7 new_class class_character new_property new_object
+#' @param x `Character scalar` pointing to the relevant folder.
 #' @export
 #'
 macro_study <- S7::new_class(
     name = "macro_study",
     package = "metanalysis",
-    abstract = TRUE,
     properties = list(
-        path   = S7::class_character,
-        slotNames = S7::new_property(
-            getter = function(self) setdiff(
-                S7::prop_names(self), c("path", "slotNames")
+        path        = S7::class_character,
+        data_slots  = S7::class_list,
+        study_overview = S7::new_property(
+            getter = function(self) {
+                x <- list.files(
+                    file.path(self@path, "data_sets"), recursive = TRUE
                 )
-            ),
-        study_trees = S7::class_character
-    )
+                do.call(
+                    base::rbind,
+                    strsplit(x, split = .Platform[["file.sep"]], fixed = TRUE)
+                )
+            }
+        )
+    ),
+    constructor = function(x) {
+        if(!file.exists(x)) { stop(paste0("object '", x , "' not found.")) }
+        slots <- .make_data_slots(x)
+        S7::new_object(
+            S7::S7_object(), path = normalizePath(x), data_slots = slots
+            )
+    }
 )
 
-#' @rdname macro_study
-#' @importFrom S7 new_class new_object S7_object
-#' @param x `Character scalar` pointing to the relevant folder.
-#' @export
+data_slot <- S7::new_class(
+    "data_slot",
+    package = "metanalysis",
+    properties = list(
+        name = S7::class_character,
+        load = S7::new_property( class = S7::class_language ),
+        filt = S7::new_property( class = S7::class_language )
+    ),
+    constructor = function(x) {
+        S7::new_object(
+            S7::S7_object(),
+            name = x,
+            load = rlang::expr(
+                arrow::open_dataset(
+                    file.path( self@path, "data_sets" ),
+                    partitioning = c("study", "type")
+                )
+            ),
+            filt = rlang::expr(
+                dplyr::filter(.loaded_data, type == data_type) %>%
+                    dplyr::collect()
+            )
+        )
+    }
+)
+
+
+#' @importFrom dplyr collect filter
+#' @importFrom arrow open_dataset
+#' @importFrom S7 new_property
+#' @noRd
 #'
-new_macro_study <- function(x) {
-    study_instance <- S7::new_class(
-        name = "study_instance",
-        parent = macro_study,
-        package = "metanalysis",
-        properties = .make_data_properties(x),
-        constructor = function(x) {
-            if(!file.exists(x)) { stop(paste0("object '", x , "' not found.")) }
-            S7::new_object(.parent = S7::S7_object(), path = normalizePath(x) )
-        }
-    )
-    study_instance(x)
+.make_data_slots <- function(x) {
+    prp <- list.files(list.dirs(file.path(x, "data_sets"), recursive = FALSE))
+
+    data_slots <- lapply( unique(prp), data_slot )
+    `names<-`(data_slots, unique(prp))
 }
 
-
-
-.make_data_properties <- function(x) {
-    prp <- list.files(file.path(x, "data_sets"), all.files = TRUE, no.. = TRUE)
-    lapply(prp, function(x) S7::new_property(name = x))
-    }
 
 
 #
