@@ -8,14 +8,11 @@ S7::method(convert, list(macro_study, S7::class_character)) <-
 
 #' @importFrom rlang eval_tidy
 S7::method(load_data_type, macro_study) <- function(x, data_type) {
-    self <-  x
-    .loaded_data <- rlang::eval_tidy(
-        S7::prop(x@data_slots[[type]], "load")
-    )
-    rlang::eval_tidy(
-        S7::prop(x@data_slots[[type]], "filt")
+    x@data_slots[[data_type]]@filter(
+        x@data_slots[[data_type]]@loader()
     )
 }
+
 
 # f <- function(x) eval_tidy(dslot@filt)
 #

@@ -38,26 +38,41 @@ data_slot <- S7::new_class(
     "data_slot",
     package = "metanalysis",
     properties = list(
+        path = S7::class_character,
         name = S7::class_character,
-        load = S7::new_property( class = S7::class_language ),
-        filt = S7::new_property( class = S7::class_language )
+        loader = S7::class_function,
+        filter = S7::class_function
     ),
-    constructor = function(x) {
+    constructor = function(x, data_type) {
         S7::new_object(
             S7::S7_object(),
-            name = x,
-            load = rlang::expr(
-                arrow::open_dataset(
-                    file.path( self@path, "data_sets" ),
-                    partitioning = c("study", "type")
-                )
-            ),
-            filt = rlang::expr(
-                dplyr::filter(.loaded_data, type == data_type) %>%
-                    dplyr::collect()
-            )
+            path = x,
+            name = data_type,
+            loader = .default_loader(x),
+            filter = .default_filter(data_type)
         )
     }
+)
+
+.default_loader <- function(path) rlang::new_function(
+    args = NULL,
+    body = rlang::expr({
+    data_path <- file.path( !!path, "data_sets" )
+    arrow::open_dataset(
+        data_path, partitioning = c("study", "type")
+        )
+    })
+)
+
+
+
+.default_filter <- function(data_type = "auto") rlang::new_function(
+    args = rlang::pairlist2(.loaded_data = ),
+    body = rlang::expr(
+        .loaded_data %>%
+            dplyr::filter(type == !!data_type) %>%
+            dplyr::collect()
+    )
 )
 
 
@@ -69,7 +84,7 @@ data_slot <- S7::new_class(
 .make_data_slots <- function(x) {
     prp <- list.files(list.dirs(file.path(x, "data_sets"), recursive = FALSE))
 
-    data_slots <- lapply( unique(prp), data_slot )
+    data_slots <- lapply( unique(prp), data_slot, path = x )
     `names<-`(data_slots, unique(prp))
 }
 
