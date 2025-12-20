@@ -47,18 +47,18 @@ x
 
 ```{r exampleb}
 # Let's first prepare a nested folder structure to keep our tables: 
-create_study_forest(x, "demo_folder")
+create_forest_study(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 ```
 
-meta_study object could be the main user-oriented interface, for instance to get
+forest_study object could be the main user-oriented interface, for instance to get
 summary statistics across data sets. 
 
 ```{r meta-studya}
 
-x <- new_meta_study("demo_folder")
+x <- forest_study("demo_folder")
 x
 
 ```
@@ -66,7 +66,7 @@ x
 Maybe some information could be collected like this: 
 
 ```{r meta-studyb}
-x@slotNames
+x@study_overview
 
 ```
 

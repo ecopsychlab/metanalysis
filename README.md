@@ -80,35 +80,42 @@ x
 
 ``` r
 # Let's first prepare a nested folder structure to keep our tables: 
-create_study_forest(x, "demo_folder")
+create_forest_study(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
-#> [1] "demo_folder/data_sets/A/Aauto.parquet"
-#> [2] "demo_folder/data_sets/B/Bauto.parquet"
-#> [3] "demo_folder/data_sets/C/Cauto.parquet"
-#> [4] "demo_folder/data_sets/D/Dauto.parquet"
+#> [1] "demo_folder/data_sets/A/auto/auto.parquet"
+#> [2] "demo_folder/data_sets/B/auto/auto.parquet"
+#> [3] "demo_folder/data_sets/C/auto/auto.parquet"
+#> [4] "demo_folder/data_sets/D/auto/auto.parquet"
 ```
 
-meta_study object could be the main user-oriented interface, for
+forest_study object could be the main user-oriented interface, for
 instance to get summary statistics across data sets.
 
 ``` r
 
-x <- new_meta_study("demo_folder")
+x <- forest_study("demo_folder")
 x
-#> <metanalysis::study_instance>
-#>  @ path     : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
-#>  @ slotNames: chr [1:2] "data_sets" "processed"
-#>  @ data_sets: NULL
-#>  @ processed: NULL
+#> <metanalysis::forest_study>
+#>  @ path          : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
+#>  @ data_slots    :List of 1
+#>  .. $ auto: <metanalysis::data_slot>
+#>  ..  ..@ name: chr "auto"
+#>  ..  ..@ load: language arrow::open_dataset(file.path(self@path, "data_sets"), partitioning = c("study",      "type"))
+#>  ..  ..@ filt: language dplyr::filter(.loaded_data, type == data_type) %>% dplyr::collect()
+#>  @ study_overview: chr [1:4, 1:3] "A" "B" "C" "D" "auto" "auto" "auto" "auto" ...
 ```
 
 Maybe some information could be collected like this:
 
 ``` r
-x@slotNames
-#> [1] "data_sets" "processed"
+x@study_overview
+#>      [,1] [,2]   [,3]          
+#> [1,] "A"  "auto" "auto.parquet"
+#> [2,] "B"  "auto" "auto.parquet"
+#> [3,] "C"  "auto" "auto.parquet"
+#> [4,] "D"  "auto" "auto.parquet"
 ```
 
 ``` r
