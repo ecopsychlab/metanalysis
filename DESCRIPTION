@@ -21,8 +21,8 @@ Imports:
 Suggests:
     tidyr,
     airway,
-    testthat (>= 3.0.0),
     withr,
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 License: GPL (>= 3)

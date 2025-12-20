@@ -1,6 +1,6 @@
 #' @title Create a study forest.
 #' @param x `Named list` of objects to create an arrow-compatible data set from.
-#' @param dataset_name `Character scalar`. Name of the database folder that
+#' @param forest_name `Character scalar`. Name of the database folder that
 #'     should be created.
 #' @param engine `function` The function that will write out the content of `x`.
 #'     (Default: `arrow::write_parquet`)
@@ -8,10 +8,11 @@
 #'     (Default: NULL)
 #' @param data_type,file_ext `Character scalar`. Specify file suffix and
 #'     file extension, respectively. (Default: `NULL`)
+#' @importFrom rlang call_match call_args
 #' @export
 #'
-create_study_forest <- function(
-        x, dataset_name, data_type = "auto", engine = arrow::write_parquet,
+create_forest_study <- function(
+        x, forest_name, data_type = "auto", engine = arrow::write_parquet,
         engine_args = NULL, file_ext = NULL
 ) {
     # check input
@@ -22,7 +23,7 @@ create_study_forest <- function(
 
     # Simple case first
     if( is.character(x) ) {
-        .build_dataset_folders(x, dataset_name)
+        .create_forest_study_dirs(forest_name, x)
         # Finish simple case
         return( invisible() )
     }
@@ -30,14 +31,12 @@ create_study_forest <- function(
     if( is.null(x_names <- names(x)) ) {
         stop("'x' must be a character vector or a named list.")
     }
-    .build_dataset_folders(x_names, dataset_name)
+    .create_forest_study_dirs(forest_name, x_names)
 
-    # Then, prepare a call to `add_forest_dataset()`
-    add_args <- rlang::call_args(
-        rlang::call_match( fn = add_forest_dataset, defaults = TRUE )
-    )
-    add_args[["dataset_name"]] <- dataset_name
-    do.call(add_forest_dataset, add_args)
+    # Capture args to preserve expressions
+    fun_call <- rlang::call_match(fn = add_to_forest, defaults = TRUE)
+    # Then, forward the call to `add_to_forest()`
+    do.call( add_to_forest, rlang::call_args( fun_call ))
 
     # Finish
     return( invisible(NULL) )
@@ -46,9 +45,9 @@ create_study_forest <- function(
 
 
 
-#' @title Add a list of R objects to an existing macro_study object.
+#' @title Add a list of R objects to an existing forest_study object.
 #' @param x `Named list` of objects to create an arrow-compatible data set from.
-#' @param dataset_name `Character scalar`. Name of the database folder that
+#' @param forest_name `Character scalar`. Name of the database folder that
 #'     should be created.
 #' @param engine `function` The function that will write out the content of `x`.
 #'     (Default: `arrow::write_parquet`)
@@ -59,8 +58,8 @@ create_study_forest <- function(
 #' @importFrom rlang enquo
 #' @export
 #'
-add_forest_dataset <- function(
-        x, dataset_name, data_type = "auto", engine = arrow::write_parquet,
+add_to_forest <- function(
+        x, forest_name, data_type = "auto", engine = arrow::write_parquet,
         engine_args = NULL, file_ext = NULL
         ) {
 
@@ -71,42 +70,17 @@ add_forest_dataset <- function(
     x_names <- names(x)
 
     out_paths <- paste0(
-        file.path(dataset_name, "data_sets", x_names, data_type, data_type),
+        file.path(forest_name, "data_sets", x_names, data_type, data_type),
         file_ext
     )
-    .add_dataset_folders(dataset_name, data_type)
+    .add_data_slot_dirs_to_trees(forest_name, data_type)
     .add_dataset_files(x, out_paths, engine, engine_args)
 
     invisible()
 }
 
 
-#' @param x a character `vector names(x)``
-#' @param dataset_name from `create_study_forest()` call
-#' @noRd
-#'
-.build_dataset_folders <- function(x, dataset_name) {
-    dir.create( dataset_name, showWarnings = FALSE )
-    lapply(
-        file.path( dataset_name, c("data_sets", "processed") ),
-        dir.create,  showWarnings = FALSE
-    )
-    for( n in x ) {
-        dir.create( file.path(dataset_name, "data_sets", n), showWarnings = FALSE )
-        }
-    invisible(NULL)
-}
 
-.add_dataset_folders <- function(dataset_name, data_type) {
-    lapply(
-        file.path(
-            list.dirs(file.path(dataset_name, "data_sets"), recursive = FALSE),
-            data_type
-        ),
-        dir.create,  showWarnings = FALSE
-    )
-    invisible(NULL)
-}
 
 
 #' @param x a list of files to write

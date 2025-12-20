@@ -7,12 +7,13 @@
 #' @param x `Character scalar` pointing to the relevant folder.
 #' @export
 #'
-macro_study <- S7::new_class(
-    name = "macro_study",
+forest_study <- S7::new_class(
+    name = "forest_study",
     package = "metanalysis",
     properties = list(
         path = S7::class_character,
-        data_slots = S7::class_list, macro_view = S7::new_property(
+        data_slots = S7::class_list,
+        trees = S7::new_property(
             getter = function(self) {
                 x <- list.files(
                     file.path(self@path, "data_sets"), recursive = TRUE

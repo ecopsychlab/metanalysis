@@ -6,8 +6,8 @@
 #' @export
 #' @param x an R object.
 #' @examples
-#' create_study_forest
-create_study_forest <- S7::new_generic("create_study_forest", "x")}
+#' create_forest_study
+create_forest_study <- S7::new_generic("create_forest_study", "x")}
 \usage{
 load_data_type(x, data_type, ...)
 }
@@ -16,6 +16,6 @@ load_data_type(x, data_type, ...)
 #' @export
 #' @param x an R object.
 #' @examples
-#' create_study_forest
-create_study_forest <- S7::new_generic("create_study_forest", "x")
+#' create_forest_study
+create_forest_study <- S7::new_generic("create_forest_study", "x")
 }

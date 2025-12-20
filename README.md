@@ -80,7 +80,7 @@ x
 
 ``` r
 # Let's first prepare a nested folder structure to keep our tables: 
-create_study_forest(x, "demo_folder")
+create_forest_study(x, "demo_folder")
 
 # Confirm that the files are now written: 
 list.files("demo_folder", full.names = TRUE, recursive = TRUE)
@@ -90,14 +90,14 @@ list.files("demo_folder", full.names = TRUE, recursive = TRUE)
 #> [4] "demo_folder/data_sets/D/auto/auto.parquet"
 ```
 
-macro_study object could be the main user-oriented interface, for
+forest_study object could be the main user-oriented interface, for
 instance to get summary statistics across data sets.
 
 ``` r
 
-x <- macro_study("demo_folder")
+x <- forest_study("demo_folder")
 x
-#> <metanalysis::macro_study>
+#> <metanalysis::forest_study>
 #>  @ path          : chr "/home/thomaz/Documents/bioinf/metanalysis/demo_folder"
 #>  @ data_slots    :List of 1
 #>  .. $ auto: <metanalysis::data_slot>
