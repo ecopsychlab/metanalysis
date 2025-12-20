@@ -21,7 +21,7 @@ random_macro_study <- function(n, dataset_name = tempfile()) {
             .random_table(), paste0(file.path(dataset_name, i, i), ".parquet")
         )
     }
-    new_macro_study(dataset_name)
+    macro_study(dataset_name)
 }
 
 #' Helper to make random tables

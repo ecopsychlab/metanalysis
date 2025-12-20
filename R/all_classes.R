@@ -11,9 +11,8 @@ macro_study <- S7::new_class(
     name = "macro_study",
     package = "metanalysis",
     properties = list(
-        path        = S7::class_character,
-        data_slots  = S7::class_list,
-        study_overview = S7::new_property(
+        path = S7::class_character,
+        data_slots = S7::class_list, macro_view = S7::new_property(
             getter = function(self) {
                 x <- list.files(
                     file.path(self@path, "data_sets"), recursive = TRUE
@@ -26,13 +25,14 @@ macro_study <- S7::new_class(
         )
     ),
     constructor = function(x) {
-        if(!file.exists(x)) { stop(paste0("object '", x , "' not found.")) }
+        if(!file.exists(x)) { stop(paste0("Object '", x , "' not found.")) }
         slots <- .make_data_slots(x)
         S7::new_object(
             S7::S7_object(), path = normalizePath(x), data_slots = slots
-            )
+        )
     }
 )
+
 
 data_slot <- S7::new_class(
     "data_slot",
@@ -54,18 +54,23 @@ data_slot <- S7::new_class(
     }
 )
 
+#' @noRd
+#' @importFrom rlang expr new_function
+#' @importFrom arrow open_dataset
 .default_loader <- function(path) rlang::new_function(
     args = NULL,
     body = rlang::expr({
-    data_path <- file.path( !!path, "data_sets" )
-    arrow::open_dataset(
-        data_path, partitioning = c("study", "type")
+        data_path <- file.path( !!path, "data_sets" )
+        arrow::open_dataset(
+            data_path, partitioning = c("study", "type")
         )
     })
 )
 
 
-
+#' @noRd
+#' @importFrom rlang pairlist2 expr new_function
+#' @importFrom dplyr filter %>% collect
 .default_filter <- function(data_type = "auto") rlang::new_function(
     args = rlang::pairlist2(.loaded_data = ),
     body = rlang::expr(
@@ -75,6 +80,24 @@ data_slot <- S7::new_class(
     )
 )
 
+.check_micro_name <- function(path, name) {
+
+    if(missing(name)) {
+        stop(
+            "The 'name' argument is required. Valid options are:\n'",
+            paste0(list.dirs(path, recursive = FALSE, full.names = FALSE),
+                   collapse = "', '"), "'."
+        )
+    }
+    if(! name %in% list.dirs(path, recursive = FALSE, full.names = FALSE)) {
+        stop(
+            "No folder named '", name, "' found at location '",
+            path, "'. Valid options are:\n'",
+            paste0(list.dirs(path, recursive = FALSE, full.names = FALSE),
+                   collapse = "', '"), "'."
+        )
+    }
+}
 
 #' @importFrom dplyr collect filter
 #' @importFrom arrow open_dataset
@@ -84,7 +107,7 @@ data_slot <- S7::new_class(
 .make_data_slots <- function(x) {
     prp <- list.files(list.dirs(file.path(x, "data_sets"), recursive = FALSE))
 
-    data_slots <- lapply( unique(prp), data_slot, path = x )
+    data_slots <- lapply( unique(prp), data_slot, x = x )
     `names<-`(data_slots, unique(prp))
 }
 
